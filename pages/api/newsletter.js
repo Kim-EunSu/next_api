@@ -1,15 +1,29 @@
-function handler(req, res) {
-  if (req.method === 'POST') {
+// function handler(req, res) {
+//   if (req.method === 'POST') {
+//     const userEmail = req.body.email;
+
+//     if (!userEmail || !userEmail.includes('@')) {
+//       res.status(422).json({ message: 'Invalid email address.' });
+//       return;
+//     }
+
+//     console.log(userEmail);
+//     res.status(201).json({ message: 'Signed up!' });
+//   }
+// }
+
+// export default handler;
+
+export default function handler(req, res) {
+  if (req.method === "POST") {
     const userEmail = req.body.email;
 
-    if (!userEmail || !userEmail.includes('@')) {
-      res.status(422).json({ message: 'Invalid email address.' });
+    if (!userEmail || !userEmail.includes("@")) {
+      res.status(422).json({ message: "Invalid email address" });
       return;
     }
 
     console.log(userEmail);
-    res.status(201).json({ message: 'Signed up!' });
+    res.status(201).json({ message: "Signed Up!" });
   }
 }
-
-export default handler;
