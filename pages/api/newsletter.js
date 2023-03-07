@@ -1,20 +1,4 @@
-import { MongoClient } from "mongodb";
-
-async function connectDatabase() {
-  const client = await MongoClient.connect(
-    "mongodb+srv://EunSu:zcydiDJibDtxOpkn@nextapi.ffspq4w.mongodb.net/?retryWrites=true&w=majority"
-  );
-
-  const db = client.db("events");
-
-  return client;
-}
-
-async function insertDocument(client, document) {
-  const db = client.db();
-
-  await db.collection("newsletter").insertOne(document); //데이터를 삽입하기위해서는 document
-}
+import { connectDatabase, insertDocument } from "../../helpers/db-util";
 
 async function handler(req, res) {
   if (req.method === "POST") {
@@ -35,7 +19,8 @@ async function handler(req, res) {
     }
 
     try {
-      await insertDocument(client, { email: userEmail });
+      // 매개변수에 컬렉션 이름을 두번째로 추가해서 이메일이 해당하는 컬렉션에 삽입
+      await insertDocument(client, "newsletter", { email: userEmail });
       client.close();
     } catch (error) {
       res.status(500).json({ message: "Inserting data failed" });
