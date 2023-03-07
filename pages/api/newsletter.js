@@ -12,9 +12,9 @@ async function handler(req, res) {
     const client = await MongoClient.connect(
       "mongodb+srv://EunSu:zcydiDJibDtxOpkn@nextapi.ffspq4w.mongodb.net/?retryWrites=true&w=majority"
     );
-    const db = client.db("newsletter");
+    const db = client.db("events");
 
-    await db.collection("emails").insertOne({ email: userEmail });
+    await db.collection("newsletter").insertOne({ email: userEmail });
 
     client.close();
 
