@@ -44,9 +44,9 @@ async function handler(req, res) {
 
     const documents = await db
       .collection("comments")
-      .find()
+      .find() //컬렉션의 모든문자 가져옴
       .sort({ _id: -1 }) //가장 최신의 댓글이 첫 댓글
-      .toArray();
+      .toArray(); //toArray는 단순히 comments컬렉션의 모든 엔트리를 배열로 제공
 
     res.status(200).json({ comments: documents });
   }
