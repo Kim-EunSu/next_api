@@ -1,29 +1,25 @@
-// function handler(req, res) {
-//   if (req.method === 'POST') {
-//     const userEmail = req.body.email;
+import { MongoClient } from "mongodb";
 
-//     if (!userEmail || !userEmail.includes('@')) {
-//       res.status(422).json({ message: 'Invalid email address.' });
-//       return;
-//     }
-
-//     console.log(userEmail);
-//     res.status(201).json({ message: 'Signed up!' });
-//   }
-// }
-
-// export default handler;
-
-export default function handler(req, res) {
+async function handler(req, res) {
   if (req.method === "POST") {
     const userEmail = req.body.email;
 
     if (!userEmail || !userEmail.includes("@")) {
-      res.status(422).json({ message: "Invalid email address" });
+      res.status(422).json({ message: "Invalid email address." });
       return;
     }
 
-    console.log(userEmail);
-    res.status(201).json({ message: "Signed Up!" });
+    const client = await MongoClient.connect(
+      "mongodb+srv://EunSu:zcydiDJibDtxOpkn@nextapi.ffspq4w.mongodb.net/?retryWrites=true&w=majority"
+    );
+    const db = client.db("newsletter");
+
+    await db.collection("emails").insertOne({ email: userEmail });
+
+    client.close();
+
+    res.status(201).json({ message: "Signed up!" });
   }
 }
+
+export default handler;
